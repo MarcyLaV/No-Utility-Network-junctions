@@ -1,0 +1,41 @@
+// This Attribute Rule adds junctions to any end of the line that doesn't already have a point feature in that "network"
+// Only set the trigger on Insert (not Update)
+
+//global variables, the feature class you want to insert junctions into, and an empty array of points
+var point_class = "Olympia_Utility.DBO.Water_geoNet_Junctions" //***Replace name here
+var new_points = [];
+
+//Make variables for all point feature classes you want included
+var fitting = FeatureSetByName($datastore, "olympia_utility.DBO.waFitting", ['OBJECTID'], true)  //***Replace name here, make new line for each point feature class in "network"
+var junction= FeatureSetByName($datastore, "Olympia_Utility.DBO.Water_geoNet_Junctions", ['OBJECTID'], true)  //***Don't forget to include the junction feature class, replace name
+
+//Get the origin and end point of the line (will include spatial reference and z-value automatically)
+// first point of the first path of the line
+var orig_point = Geometry($feature).paths[0][0]
+// last point of the last path of the line
+var end_point = Geometry($feature).paths[-1][-1]
+
+//Check to see if the origin point intersects with any of the point feature classes
+//If there's no intersections at the line origin with any point feature class, add a junction
+When( 
+     first(Intersects(orig_point, fitting))!=null, "",  //***Make a new line for each point feature class
+     first(Intersects(orig_point, junction))!=null, "",
+     push(new_points, {'geometry': orig_point})
+)
+
+//Now do the same for the end point
+When( 
+     first(Intersects(end_point, fitting))!=null, "",  //***Make a new line for each point feature class
+     first(Intersects(end_point, junction))!=null, "",
+     push(new_points, {'geometry': end_point})
+)
+
+//These are outside the if/else statements so it'll happen with 0, 1, or 2 junctions
+var edit_payload = [{
+    'className': point_class,
+    'adds': new_points
+}]
+
+return {
+    "edit": edit_payload
+}
