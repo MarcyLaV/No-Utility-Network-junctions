@@ -11,7 +11,7 @@ var junctions = FeatureSetByName($datastore, "Olympia_Utility.DBO.Water_geoNet_J
 //Check to see if the new point intersects with any of the junction feature class
 var doesIntersect = first(Intersects(Geometry($feature), junctions));
 
-//If there's an intersections at the line origin with any point feature class, remove the junction
+//If there's an intersection with the new point, remove the junction
 if (doesIntersect !=null)
 {
     // Add the intersecting junction's objectID to the list to remove
