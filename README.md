@@ -1,10 +1,7 @@
 # No Utility Network - junctions
 
 ## Background
-In migrating from ArcMap to ArcGIS Pro, we're being forced to migrate away from our geometric networks.  
-Utility Network would require a huge schema change that would cost us time and money.  
-
-Since we only used the most basic of functionality in geometric networks, we've decided to move forward with a No Network solution.
+In migrating from ArcMap to ArcGIS Pro, we're being forced to migrate away from our geometric networks.  Utility Network would require a huge schema change that would cost us time and money.  Since we only used the most basic of functionality in geometric networks, we've decided to move forward with a No Network solution.
 
 We'll be using Map Topology in ArcGIS Pro to facilitate moving coincident items together during editing.
 
