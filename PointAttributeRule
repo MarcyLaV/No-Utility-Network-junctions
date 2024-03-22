@@ -1,0 +1,29 @@
+// This Attribute Rule removes a junction if it's coincident to the new/moved point
+// Set the trigger on both Insert and Update
+
+//global variables, the feature class you want to insert junctions into, and an empty array of points
+var point_class = "Olympia_Utility.DBO.Water_geoNet_Junctions" //***Replace name here
+var remove_points = [];
+
+//Make variables for junctions.  For some reason, I can't use the variable point_class here
+var junctions = FeatureSetByName($datastore, "Olympia_Utility.DBO.Water_geoNet_Junctions", ['OBJECTID'], true); //***Replace name here
+
+//Check to see if the new point intersects with any of the junction feature class
+var doesIntersect = first(Intersects(Geometry($feature), junctions));
+
+//If there's an intersections at the line origin with any point feature class, remove the junction
+if (doesIntersect !=null)
+{
+    // Add the intersecting junction's objectID to the list to remove
+    push(remove_points, {'objectID': doesIntersect.objectID})
+}
+
+//Now, actually remove the point
+var edit_payload = [{
+    'className': point_class,
+    'deletes': remove_points
+}]
+
+return {
+    "edit": edit_payload
+}
