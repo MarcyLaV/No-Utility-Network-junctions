@@ -6,9 +6,9 @@ In migrating from ArcMap to ArcGIS Pro, we're being forced to migrate away from 
 We'll be using Map Topology in ArcGIS Pro to facilitate moving coincident items together during editing.
 
 ## Use Case
-The one piece of missing functionality we've come to depend on to keep our data "connected" is the geometric network junctions, which show up on the ends of any line feature that doesn't already have a point feature there. Also when a point is placed on top of a junction, the junction disappears.
+The one piece of missing functionality we've come to depend on to keep our data "connected" is the geometric network junctions, which show up on the ends of any line feature that doesn't already have a point feature there. When a point is placed on top of a junction, the junction disappears.  Additionally when a point on a line is deleted, a junction is added.
 
-These two Attribute Rules re-create that functionality in an ArcPro environment.  
+These three Attribute Rules re-create that functionality in an ArcPro environment.  
 
 ## Installation:
 * Create a point feature class to act as junctions.  If you're migrating from an existing geometric network, I recommend making it the same name for map continuity.
