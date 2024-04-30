@@ -12,5 +12,5 @@ These three Attribute Rules re-create that functionality in an ArcPro environmen
 
 ## Installation:
 * Create a point feature class to act as junctions.  If you're migrating from an existing geometric network, I recommend making it the same name for map continuity.
-* Create a new attribute rule on each line and each point feature class you want to participate in the fake network.  
+* Create a new attribute rule on each line and two attribute rules each point feature class that you want to participate in the fake network.  
 * Update the Arcade code of each rule to match your feature class names
