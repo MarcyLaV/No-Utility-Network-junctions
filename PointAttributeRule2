@@ -1,0 +1,31 @@
+// This Attribute Rule add a junction if the deleted point is coincident to a line
+// Set the trigger on Delete
+
+//global variables, the feature class you want to insert junctions into, and an empty array of points
+var point_class = "Olympia_Utility.DBO.Water_getNet_Junctions"
+var new_points = [];
+
+//Make variables for junctions.  For some reason, I can't use the variable point_class here
+var junctions = FeatureSetByName($datastore, "Olympia_Utility.DBO.Water_getNet_Junctions", ['OBJECTID'], true);
+
+//Make variables for all line feature classes you want included
+var pipe = FeatureSetByName($datastore, "olympia_utility.DBO.waPipe", ['OBJECTID'], true)
+
+//Check to see if the point being deleted intersects with the line feature class
+var doesIntersect = first(Intersects(Geometry($feature), pipe))
+
+//If the deleted point intersected with a line, add a junction
+if (doesIntersect !=null)
+{
+    push(new_points, {'geometry': Geometry($feature)})
+}
+
+//Now, actually add the point
+var edit_payload = [{
+    'className': point_class,
+    'adds': new_points
+}]
+
+return {
+    "edit": edit_payload
+}
