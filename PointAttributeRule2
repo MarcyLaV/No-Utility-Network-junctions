@@ -2,11 +2,11 @@
 // Set the trigger on Delete
 
 //global variables, the feature class you want to insert junctions into, and an empty array of points
-var point_class = "Olympia_Utility.DBO.Water_getNet_Junctions"
+var point_class = "Olympia_Utility.DBO.Water_geoNet_Junctions"
 var new_points = [];
 
 //Make variables for junctions.  For some reason, I can't use the variable point_class here
-var junctions = FeatureSetByName($datastore, "Olympia_Utility.DBO.Water_getNet_Junctions", ['OBJECTID'], true);
+var junctions = FeatureSetByName($datastore, "Olympia_Utility.DBO.Water_geoNet_Junctions", ['OBJECTID'], true);
 
 //Make variables for all line feature classes you want included
 var pipe = FeatureSetByName($datastore, "olympia_utility.DBO.waPipe", ['OBJECTID'], true)
